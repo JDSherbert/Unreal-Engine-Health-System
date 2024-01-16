@@ -74,6 +74,15 @@ public:
     FORCEINLINE float GetMaxHealth() const { return MaxHealth; }
 
     /**
+	* Comparison method. Returns if the entity is dead or not (CurrentHealth > 0.0f).
+	* @return bool : True if dead.
+	* @since 16/01/2024
+	* @author JDSherbert
+	*/
+    UFUNCTION(BlueprintPure, Category = "Sherbert|Component|Health")
+    FORCEINLINE bool IsDead() const { return CurrentHealth > 0.0f ? false : true; }
+
+    /**
 	* Setter method. Sets current health. 
     * Preferred function for initialization and validation. Will not allow the set value to exceed MaxHealth or be below 0.0f.
 	* @param NewCurrentHealth : Sets the CurrentHealth on this component.
@@ -104,6 +113,10 @@ private:
     UPROPERTY(EditDefaultsOnly, Category = "Sherbert|Component|Health", meta = (AllowPrivateAccess = "true"))
     float MaxHealth;
 
+	/* Current death state of the entity. True if dead. */
+    UPROPERTY(Transient, Category = "Sherbert|Component|Health", meta = (AllowPrivateAccess = "true"))
+    bool bDead;
+
     /**
 	* Validation method. Clamps inbound values to expected values.
 	* @param Value : An expected CurrentHealth value.
@@ -121,6 +134,24 @@ private:
 	* @author JDSherbert
 	*/
     FORCEINLINE float Clamp_MaxHealth(float Value) { return FMath::Max(0.0f, Value); }
+
+	/**
+	* Called internally. Polls IsDead() getter and fires the event if true.
+	* Sets bDead variable and fires the death event ONLY ONCE upon death, even if additional triggers are recieved.
+	* @since 16/01/2024
+	* @author JDSherbert
+	*/
+	FORCEINLINE void DeathCheck() 
+	{ 
+		if(IsDead()) 
+		{
+			if(!bDead)
+			{
+				bDead = true;
+				Event_OnDeath(this->GetOwner());
+			}
+		}
+	}
 
 public:
 
