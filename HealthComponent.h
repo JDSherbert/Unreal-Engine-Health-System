@@ -20,7 +20,7 @@ namespace HealthDefaults
 /**
 * Health Component Class.
 * Holds a current + max health value, fires events when health changes or becomes less than/equal to 0.0f.
-* Damage is assigned via built in UDamage objects.
+* Damage is assigned via floats.
 * Very quick easy component to add functionality to damageable objects.
 * @since 16/01/2024
 * @author JDSherbert
