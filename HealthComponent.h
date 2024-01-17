@@ -90,7 +90,18 @@ public:
 	* @author JDSherbert
 	*/
     UFUNCTION(BlueprintCallable, Category = "Sherbert|Component|Health")
-    FORCEINLINE void SetCurrentHealth(float NewCurrentHealth) { CurrentHealth = Clamp_CurrentHealth(NewCurrentHealth); }
+    FORCEINLINE void SetCurrentHealth(float NewCurrentHealth) 
+	{ 
+		float TempHealth = CurrentHealth;
+    	CurrentHealth = Clamp_CurrentHealth(NewCurrentHealth);
+
+    	// Health changed?
+    	if(TempHealth != CurrentHealth)
+    	{
+        	Event_OnHealthChanged(CurrentHealth);
+        	DeathCheck();
+    	}	
+	}
 
     /**
 	* Setter method. Sets max health. 
@@ -101,7 +112,19 @@ public:
 	* @author JDSherbert
 	*/
     UFUNCTION(BlueprintCallable, Category = "Sherbert|Component|Health")
-    FORCEINLINE void SetMaxHealth(float NewMaxHealth) { MaxHealth = Clamp_MaxHealth(NewMaxHealth); }
+    FORCEINLINE void SetMaxHealth(float NewMaxHealth) 
+	{ 
+		float TempHealth = MaxHealth;
+    	MaxHealth = Clamp_MaxHealth(NewMaxHealth);
+		CurrentHealth = Clamp_CurrentHealth(CurrentHealth);
+
+    	// Health changed?
+    	if(TempHealth != CurrentHealth)
+    	{
+        	Event_OnHealthChanged(CurrentHealth);
+        	DeathCheck();
+    	}	
+	}
 
 private:
 
