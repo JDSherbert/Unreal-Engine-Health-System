@@ -7,6 +7,8 @@
 #include <Runtime/Engine/Classes/Components/ActorComponent.h>
 #include <Runtime/Engine/Classes/GameFramework/DamageType.h>
 
+#include "HealthLog.h"
+
 #include "HealthComponent.generated.h"
 
 namespace HealthDefaults
@@ -54,6 +56,14 @@ public:
 	*/
     UFUNCTION(BlueprintCallable, Category = "Sherbert|Component|Health")
     void Heal(float Amount);
+
+    /**
+	* Get the logs from health changes.
+	* @since 16/01/2024
+	* @author JDSherbert
+	*/
+	UFUNCTION(BlueprintPure, Category = "Sherbert|Component|Health")
+    FORCEINLINE const TArray<FDamageLog>& GetHealthLogs() const { return HealthLogs; }
 
     /**
 	* Getter method. Returns the current health.
@@ -128,6 +138,9 @@ public:
 
 private:
 
+	UPROPERTY(Transient, Category = "Sherbert|Component|Health", meta = (AllowPrivateAccess = "true"))
+    TArray<FHealthLog> HealthLogs;
+
     /* Current health of the entity. */
     UPROPERTY(Transient, Category = "Sherbert|Component|Health", meta = (AllowPrivateAccess = "true"))
     float CurrentHealth;
@@ -164,7 +177,7 @@ private:
 	* @since 16/01/2024
 	* @author JDSherbert
 	*/
-	FORCEINLINE void DeathCheck() 
+	void DeathCheck() 
 	{ 
 		if(IsDead()) 
 		{
@@ -174,6 +187,21 @@ private:
 				Event_OnDeath(this->GetOwner());
 			}
 		}
+	}
+
+	/**
+	* Called internally. Files a log locally which can be read later in the session (via GetHealthLogs).
+	* @since 16/01/2024
+	* @author JDSherbert
+	*/
+	void LogHealth(const float Amount)
+	{
+		FHealthLog Entry;
+    	Entry.Source = GetOwner()->GetFName();
+    	Entry.Value = Amount;
+    	Entry.Timestamp = FDateTime::Now().ToString();
+
+    	HealthLogs.Add(Entry);
 	}
 
 public:
