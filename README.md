@@ -24,7 +24,11 @@
 
 -----------------------------------------------------------------------
 ## Overview
-Some words about the project here-
+This health system provides a simple solution for tracking damage on actors in Unreal Engine.
+Just call InflictDamage or Heal in Blueprint to modify health values. You can also set the maximum health and starting health values.
+
+The component will transiently log all health changes for convenience when debugging in playtests too. 
+The logs are purged at the end of the play session.
 
 
 -----------------------------------------------------------------------
