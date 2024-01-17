@@ -2,7 +2,7 @@
 
 #pragma once
 
-#include "CoreMinimal.h"
+#include <Runtime/Core/Public/CoreMinimal.h>
 
 #include <Runtime/Engine/Classes/Components/ActorComponent.h>
 #include <Runtime/Engine/Classes/GameFramework/DamageType.h>
