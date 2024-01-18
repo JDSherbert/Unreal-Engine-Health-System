@@ -219,6 +219,7 @@ public:
 
 	/**
 	* Event: Triggers when the actor has successfully had its health value changed.
+ 	* You'll probably want to hook your healthbar UI to this event.
 	* @param NewHealth : The health value that the actor now has.
 	* @since 16/01/2024
 	* @author JDSherbert
