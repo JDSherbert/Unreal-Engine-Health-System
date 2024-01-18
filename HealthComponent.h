@@ -47,7 +47,7 @@ public:
 	* @author JDSherbert
 	*/
     UFUNCTION(BlueprintCallable, Category = "Sherbert|Component|Health")
-    void InflictDamage(float Amount);
+    void InflictDamage(const float Amount);
 
     /**
 	* Apply healing to this entity.
@@ -55,7 +55,7 @@ public:
 	* @author JDSherbert
 	*/
     UFUNCTION(BlueprintCallable, Category = "Sherbert|Component|Health")
-    void Heal(float Amount);
+    void Heal(const float Amount);
 
     /**
 	* Get the logs from health changes.
