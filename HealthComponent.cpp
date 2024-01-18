@@ -18,9 +18,9 @@ UHealthComponent::UHealthComponent(float InitialHealth, float InitialMaxHealth)
 
 /* ------------------------------------------------------------------------------- */
 
-void UHealthComponent::InflictDamage(float Amount)
+void UHealthComponent::InflictDamage(const float Amount)
 {
-    float TempHealth = CurrentHealth;
+    const float TempHealth = CurrentHealth;
     CurrentHealth = Clamp_CurrentHealth(CurrentHealth -= Amount);
 
     // Health changed?
@@ -33,9 +33,9 @@ void UHealthComponent::InflictDamage(float Amount)
 
 /* ------------------------------------------------------------------------------- */
 
-void UHealthComponent::Heal(float Amount)
+void UHealthComponent::Heal(const float Amount)
 {
-    float TempHealth = CurrentHealth;
+    const float TempHealth = CurrentHealth;
     CurrentHealth = Clamp_CurrentHealth(CurrentHealth += Amount);
 
     // Health changed?
