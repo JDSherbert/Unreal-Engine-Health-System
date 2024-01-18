@@ -1,4 +1,4 @@
-// HealthAndDamageComponent.h
+// ©2024 JDSherbert. All Rights Reserved.
 
 #pragma once
 
